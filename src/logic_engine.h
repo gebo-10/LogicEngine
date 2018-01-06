@@ -21,8 +21,7 @@ public:
 	void call(Args ...args) {
 		auto com = new Component;
 		
-		auto fun = std::any_cast<std::function<void(Args...)> >(com->function[0]);
-		fun(args...);
+        //com->in();
 	}
 
 
