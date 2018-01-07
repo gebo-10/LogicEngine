@@ -1,5 +1,0 @@
-cmake_minimum_required(VERSION 3.8)
-PROJECT(comp)
-INCLUDE_DIRECTORIES(.)
-AUX_SOURCE_DIRECTORY(. SRC)
-add_library(comp SHARED ${SRC})

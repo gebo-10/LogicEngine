@@ -95,7 +95,7 @@ struct CallObject<void> : public Callable {
 class  Component
 {
 public:
-	std::function<void(CallType,Params)> out;
+	std::function<int(CallType,Params)> out;
     void in(CallType type, Params params) {
         CallablePtr call = function[type];
         (*call)(params);
@@ -130,18 +130,22 @@ public:
         return true;
     }
 
+    void call(CallType type) {
+        Params params;
+        out(type, params);
+    }
 	template<typename... Args>
 	void call(CallType type,Args... args) {
         Params params;
         gen_params(params, args...);
         out(type, params);
 	}
-    void call(std::any callback) {
+    void invoke(std::any callback) {
         auto fun = std::any_cast<std::function<void(void)> >(callback);
         fun();
     }
     template<typename... Args>
-    void call(std::any callback, Args... args) {
+    void invoke(std::any callback, Args... args) {
         auto fun = std::any_cast<std::function<void(Args...)> >(callback);
         fun(args...);
     }
@@ -157,3 +161,12 @@ public:
 //////////////////////////////////////////////////////////////////////////////////////
 //__declspec(dllexport)  Component *create();
 //__declspec(dllexport)  Component *instance();
+
+#define EXPORT_COMPONENT(NAME) \
+extern "C" _declspec(dllexport)  Component *create() { \
+    return new NAME;    \
+}   \
+extern "C" _declspec(dllexport)  Component *instance() { \
+    static auto ins = new NAME; \
+    return ins; \
+} 

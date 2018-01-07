@@ -1,5 +1,0 @@
-namespace BUS {
-    enum {
-
-    };
-}

@@ -5,8 +5,9 @@ cmake_minimum_required(VERSION 3.8)
 PROJECT(LogicEngine)
 
 INCLUDE_DIRECTORIES(src)
+INCLUDE_DIRECTORIES(interface)
 
-file(GLOB CURRENT_HEADERS "src/*.h") 
+file(GLOB CURRENT_HEADERS "interface/*.h") 
 source_group("Include" FILES ${CURRENT_HEADERS}) 
 
 

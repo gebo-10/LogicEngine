@@ -2,6 +2,8 @@
 #include<iostream>
 #include"logic_engine.h"
 #include<Windows.h>
+#include"gebo_file.h"
+#include<iostream>
 using namespace std;
 
 void p2(int a, float b) {
@@ -41,14 +43,17 @@ void gen_params(Params &params, T head, Args... rest) {
 typedef Component* ( * AddProc)(); 
 void main() {
 	//p(123, 40.5);
-    auto dll=LoadLibrary("comp.dll");
+    auto dll=LoadLibrary("file.dll");
     AddProc instance = (AddProc)GetProcAddress(dll, "instance");
     auto com=instance();
-    
-    Comp comp;
+    string path = "E:\\LogicEngine\\components\\file\\build\\Debug";
+    vector<string> files;
+    files.clear();
     Params p;
-    gen_params(p, 1, (float)2.5);
-    comp.in((CallType)1, p);
-    com->in((CallType)1, p);
+    gen_params(p, &path, &files);
+    com->in(Gebo::File::LIST_FILES, p);
+    for (auto f : files) {
+        std::cout << f.c_str() << endl;
+    }
 	getchar();
 }
