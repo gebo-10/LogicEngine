@@ -7,6 +7,52 @@
 #include <tuple>
 #include <assert.h>
 typedef int CallType;
+enum DataType
+{
+    INT,
+    FLOAT,
+    DOUBLE,
+    STRING,
+    PTR
+};
+class Contain
+{
+ public:
+     DataType type_;
+     std::any data_;
+     Contain(DataType type, std::any data):type_(type),data_(data) {}
+    ~Contain(){}
+    DataType type() { return type_; }
+    std::any data() { return data_; }
+    void get(void * resualt) {
+        switch (type_)
+        {
+        case INT:
+            *(int *)resualt = std::any_cast<int>(data_);
+            break;
+        case FLOAT:
+            *(float *)resualt = std::any_cast<float>(data_);
+            break;
+        case DOUBLE:
+            *(double *)resualt = std::any_cast<double>(data_);
+            break;
+        case STRING:
+            *(std::string *)resualt = std::any_cast<std::string>(data_);
+            break;
+        case PTR:
+            *(void **)resualt = std::any_cast<void *>(data_);
+            break;
+        default:
+            break;
+        }
+    }
+};
+
+class Result
+{
+    bool success;
+    Contain data;
+};
 
 class Params {
 private:

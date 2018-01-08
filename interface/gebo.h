@@ -3,5 +3,6 @@ namespace Gebo {
         BUS = 100,
         FILE=200,
         COMPS=300,
+        LUA=400,
     };
 }
