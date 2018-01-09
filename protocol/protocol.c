@@ -41,8 +41,8 @@ public:
             lua_engine.sol.script_file(lua_engine.search_path + file->c_str());
         });
 
-        register_call<std::string *, Result *>(Gebo::Lua::GET_VALUE, [this](std::string * file, Result * resualt) {
-            //resualt->data.data_ = lua_engine.get_value();
+        register_call<std::string *, Contain *>(Gebo::Lua::GET_VALUE, [this](std::string * file, Contain * resualt) {
+            Result = lua_engine.get_value();
         });
     }
 
