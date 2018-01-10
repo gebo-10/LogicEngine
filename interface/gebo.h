@@ -1,8 +1,28 @@
 namespace Gebo {
-    enum {
+	enum {
+		UNDEF = 0,
+	};
+	
+	enum Common {
+		FIRST_HEARTBEAT=1,
+		HEARTBEAT,
+		GET_MODEL_BY_NAME,
+		GET_SINGLETON_BY_NAME, // 得到单例
+		GET_INSTANCE_BY_NAME,  //得到一个实例
+	};
+
+    enum Interface{
         BUS = 100,
         FILE=200,
         COMPS=300,
         LUA=400,
     };
+
+	enum Event {
+
+	};
+
+	enum User {
+
+	};
 }

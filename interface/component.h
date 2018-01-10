@@ -9,11 +9,11 @@
 typedef int CallType;
 enum DataType
 {
-    INT,
-    FLOAT,
-    DOUBLE,
-    STRING,
-    PTR
+    TYPE_INT,
+	TYPE_FLOAT,
+	TYPE_DOUBLE,
+	TYPE_STRING,
+	TYPE_PTR
 };
 class Contain
 {
@@ -27,19 +27,19 @@ class Contain
     void get(void * resualt) {
         switch (type_)
         {
-        case INT:
+        case TYPE_INT:
             *(int *)resualt = std::any_cast<int>(data_);
             break;
-        case FLOAT:
+        case TYPE_FLOAT:
             *(float *)resualt = std::any_cast<float>(data_);
             break;
-        case DOUBLE:
+        case TYPE_DOUBLE:
             *(double *)resualt = std::any_cast<double>(data_);
             break;
-        case STRING:
+        case TYPE_STRING:
             *(std::string *)resualt = std::any_cast<std::string>(data_);
             break;
-        case PTR:
+        case TYPE_PTR:
             *(void **)resualt = std::any_cast<void *>(data_);
             break;
         default:
@@ -135,14 +135,15 @@ struct CallObject<void> : public Callable {
     std::function<void(void)> fun;
     void operator()(Params &p) { fun(); }
 };
-
-
 /////////////////////////////////////////////////////////////////////////////////////
 class  Component
 {
 public:
 	std::function<int(CallType,Params)> out;
     void in(CallType type, Params params) {
+		auto itr = function.find(type);
+		if (itr == function.end()) return;
+
         CallablePtr call = function[type];
         (*call)(params);
     }
