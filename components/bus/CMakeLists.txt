@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
-PROJECT(lua)
+PROJECT(comp_bus)
 
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/../../interface)
-include_directories(lua)
+
 
 file(GLOB INTERFACE "${PROJECT_SOURCE_DIR}/../../interface/*.h") 
 source_group("Interface" FILES ${INTERFACE}) 
@@ -13,8 +13,10 @@ source_group("Include" FILES ${CURRENT_HEADERS})
 
 AUX_SOURCE_DIRECTORY(. SRC)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../../bin)
+#set(EXECUTABLE_OUTPUT_PATH  ${PROJECT_SOURCE_DIR}/../../bin)
 #set_property(TARGET my_target PROPERTY CXX_STANDARD 17)
 #set_property(TARGET my_target PROPERTY CXX_STANDARD_REQUIRED ON)
-add_subdirectory(lua)
-add_library(${PROJECT_NAME} SHARED ${INTERFACE} ${CURRENT_HEADERS} ${SRC} )
 
+add_library(${PROJECT_NAME} SHARED ${INTERFACE} ${CURRENT_HEADERS} ${SRC} )
+#install (TARGETS comp_bus DESTINATION ${PROJECT_SOURCE_DIR}/../../bin)

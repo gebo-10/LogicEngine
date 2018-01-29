@@ -147,6 +147,21 @@ public:
         CallablePtr call = function[type];
         (*call)(params);
     }
+
+	void in(CallType type) {
+		Params params;
+		in(type, params);
+	}
+	template<typename... Args>
+	void in(CallType type, Args... args) {
+		Params params;
+		gen_params(params, args...);
+		in(type, params);
+	}
+
+	void set_out(std::function<int(CallType, Params)> pipe) {
+		out = pipe;
+	}
 public:
 	Component(){}
 	virtual ~Component(){}
@@ -161,13 +176,6 @@ public:
         function[type] = CallablePtr(new_call);
         return true;
     }
-    //template <typename... Args>
-    //bool register_call(CallType type,std::function<void(Args...)> any_fun) {
-    //    CallObject<Args...> *new_call = new CallObject<Args...>;
-    //    new_call->fun = any_fun;
-    //    function[type] = CallablePtr(new_call);
-    //    return true;
-    //}
 
     template <typename... Args>
     bool register_call(CallType type,std::function<void(Args...)> any_fun) {
@@ -206,10 +214,10 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////////////////
-//__declspec(dllexport)  Component *create();
-//__declspec(dllexport)  Component *instance();
-
-#define EXPORT_COMPONENT(NAME) \
+#define EXPORT_COMPONENT(NAME,TYPE) \
+extern "C" _declspec(dllexport)  int component_type() { \
+    return TYPE;    \
+}   \
 extern "C" _declspec(dllexport)  Component *create() { \
     return new NAME;    \
 }   \

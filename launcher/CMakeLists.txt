@@ -10,7 +10,7 @@ source_group("Interface" FILES ${INTERFACE})
 file(GLOB CURRENT_HEADERS "*.h") 
 source_group("Include" FILES ${CURRENT_HEADERS}) 
 
-
+link_directories(${BOOST_ROOT}/lib64-msvc-14.1)  
 AUX_SOURCE_DIRECTORY(. SRC)
 
 #set_property(TARGET my_target PROPERTY CXX_STANDARD 17)

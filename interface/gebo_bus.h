@@ -1,7 +1,8 @@
-#include"interface.h"
-namespace BUS {
+#include"gebo.h"
+namespace Gebo::ComponentBus {
     enum {
-    	START=Interface::BUS,
+    	START=Gebo::COMPONENT_BUS,
+		REGISTER,
     	END=START+100,
     };
 }
